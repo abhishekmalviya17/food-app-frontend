@@ -3,11 +3,12 @@ import SearchBar from "../SearchBar";
 import avatarImage from '../../images/abhishek.jpeg'
 import { ShoppingCartIcon } from '@heroicons/react/outline';
 import { MenuIcon } from '@heroicons/react/outline';
-
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,14 +16,14 @@ const Header = () => {
 
   return (
     //Main Header container
-    <div className="flex flex-row w-full custom-sm:w-full custom-sm:p-0 custom-sm:m-0 items-start">
+    <div className="mx-auto flex flex-col w-full custom-sm:w-full custom-sm:p-0 custom-sm:m-0 items-start">
       {/* Container Providing height and width to the header*/}
       <div
         id="Box"
-        className="cursor-pointer container mx-auto bg-white flex flex-col justify-end gap-3 w-full h-20 custom-sm:h-30 items-start font-['Nunito'] custom-sm:mr-0 custom-sm:ml-0"
+        className="cursor-pointer bg-white flex flex-col justify-end gap-3 w-full h-20 custom-sm:h-30 items-start font-['Nunito'] custom-sm:mr-0 custom-sm:ml-0"
       >
         {/* Our main header container containing all the header items */}
-        <div className="flex flex-row justify-between custom-sm:items-end custom-sm:ml-2 custom-sm:w-full w-full items-start">
+        <div className="custom-md:pl-40 custom-md:pr-40 flex flex-row justify-between custom-sm:items-end custom-sm:ml-2 custom-sm:w-full w-full items-start">
 
           {/* Left Part of the header */}
           <div className="flex flex-row mt-2 gap-12 w-2/5 custom-sm:w-1/3 items-end">
@@ -31,6 +32,7 @@ const Header = () => {
               alt="Shape"
               id="Shape"
               className="mt-0 w-20 custom-sm: w-30"
+              onClick={() => navigate('/home')}
             />
            <SearchBar />
           </div>
@@ -39,13 +41,13 @@ const Header = () => {
           <div className="flex flex-row gap-6 w-3/5 justify-end custom-sm:justify-start custom-sm:w-2/3 custom-sm:mx-2 font-['Nunito'] items-start">
 
             <div className="flex flex-row justify-between custom-sm:w-full items-start text-custom-black tracking-custom-1 font-normal">
-              <label className="cursor-pointer  font-['Nunito'] gap-3 font-semibold mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
+              <label  onClick={() => navigate('/home')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
                 Restaurants
               </label>
-              <label className="cursor-pointer  font-['Nunito'] gap-3 font-semibold d px-4 my-2 border-r-2 border-[#EDEEF2] hover:text-custom-blue custom-sm:hidden">
+              <label  onClick={() => navigate('/home')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold d px-4 my-2 border-r-2 border-[#EDEEF2] hover:text-custom-blue custom-sm:hidden">
                 Deals
               </label>
-              <label className="cursor-pointer  font-['Nunito'] gap-3 font-semibold  mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
+              <label  onClick={() => navigate('/settings')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold  mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
                 My orders
               </label>
 
@@ -75,10 +77,10 @@ const Header = () => {
                     className="z-10 bg-white"
                   >
                     <div className="flex flex-col">
-                      <a href="#" className="p-2 hover:bg-gray-100">
+                      <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/home')}>
                         Restaurants
                       </a>
-                      <a href="#" className="p-2 hover:bg-gray-100">
+                      <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/home')}>
                         Deals
                       </a>
                       <a href="#" className="p-2 hover:bg-gray-100">
@@ -94,13 +96,15 @@ const Header = () => {
           </div>
         </div>
 
-         {/* Divider */}
-        <img
+         
+      </div>
+      {/* Divider */}
+      <img
           src="https://file.rendit.io/n/zVwUftAATGt39Zfl8Nhe.svg"
           alt="Divider"
           id="Divider"
+          className="my-5 w-full"
         />
-      </div>
     </div>
   );
  };

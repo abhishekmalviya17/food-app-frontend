@@ -21,6 +21,9 @@ if (storedUser && storedUser.token) {
  
 }
 
+
+console.log('env',process.env.NODE_ENV )
+
 function App() {
   return (
   <Provider store={store}>
@@ -29,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/settings" element={<Settings />} />
           <Route path='/home' element={<PrivateRoute element={Home} />} />
+          <Route path='/' element={<PrivateRoute element={Home} />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/restaurants' element={<PrivateRoute element={Home} />} />

@@ -8,6 +8,7 @@ const loginRequest = () => ({ type: LOGIN_REQUEST });
 const loginSuccess = user => ({ type: LOGIN_SUCCESS, payload: user });
 const loginFailure = error => ({ type: LOGIN_FAILURE, payload: error });
 
+console.log('env',process.env.NODE_ENV )
 
 export const loginUser = (credentials, navigate, showSnackbar) => dispatch => {
     dispatch(loginRequest());

@@ -1,9 +1,12 @@
 import React from 'react';
 import { ShoppingCartIcon } from '@heroicons/react/outline';
+import { useNavigate } from 'react-router-dom';
 
 const Restaurant = ({ restaurant, categories }) => {
+    const navigate = useNavigate();
+    
     return(
-        <div className="flex flex-row w-full items-start">
+        <div className="flex flex-row w-full items-start" onClick={() => navigate(`/restaurants/${restaurant._id}`)}>
             <div
                 id="Box"
                 className="border-solid border-[#edeef2] bg-white flex flex-col pb-4 gap-4 w-full items-start border rounded-lg"

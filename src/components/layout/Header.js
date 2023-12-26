@@ -1,18 +1,30 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../SearchBar";
 import avatarImage from '../../images/abhishek.jpeg'
 import { ShoppingCartIcon } from '@heroicons/react/outline';
 import { MenuIcon } from '@heroicons/react/outline';
 import { useNavigate } from 'react-router-dom';
+import { fetchCart } from '../../redux/actions/cartActions';
 
 const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.cart);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    dispatch(fetchCart()); // Fetch cart items when the component mounts
+  }, [dispatch]);
+
+
+  const totalCartItems = items.reduce((total, currentItem) => total + currentItem.quantity, 0);
+
 
   return (
     //Main Header container
@@ -57,12 +69,14 @@ const Header = () => {
               </div>
 
                 {/* Cart icon */}
-              <div className="cursor-pointer relative inline-block mx-2 my-1 custom-sm:my-2">
-                <ShoppingCartIcon className="h-8 w-8 custom-sm:w-10 custom-sm:h-10 text-blue-500" />
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-blue-600 rounded-full">
-                  4
-                </span>
-              </div>
+                <div className="cursor-pointer relative inline-block mx-2 my-1 custom-sm:my-2" onClick={() => navigate('/cart')}>
+                  <ShoppingCartIcon className="h-8 w-8 custom-sm:w-10 custom-sm:h-10 text-blue-500" />
+                  {totalCartItems > 0 && (
+                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-blue-600 rounded-full">
+                      {totalCartItems}
+                    </span>
+                  )}
+                </div>
 
               {/* Ham menu icon */}
               <MenuIcon onClick={toggleMenu} className="h-8 w-8 text-gray-700 custom-md:hidden custom-sm:my-2" />

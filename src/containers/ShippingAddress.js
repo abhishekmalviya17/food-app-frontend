@@ -1,84 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddresses, removeAddress, updateAddress, addAddress } from '../redux/actions/addressActions';
+import AddressForm from './AddressForm'; // A separate component for address form
 import Button from "../components/common/Button";
-import { FaMapMarkerAlt, FaCity, FaFlag, FaMapPin } from "react-icons/fa"; // Import specific icons
-import TextField from "../components/common/TextField";
 
 const ShippingAddresses = () => {
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const dispatch = useDispatch();
+  const store = useSelector(state => state)
+  const addresses = useSelector(state => state.address.addresses);
+  const [editingAddress, setEditingAddress] = useState(null);
 
-  const handleSaveClick = () => {
-    console.log("Save Address");
-    // Logic to save the address
+
+  useEffect(() => {
+    dispatch(fetchAddresses());
+  }, [dispatch]);
+
+  const handleRemoveAddress = (addressId) => {
+    dispatch(removeAddress(addressId));
+    dispatch(fetchAddresses());
   };
 
-  const handleDiscardClick = () => {
-    console.log("Discard Changes");
-    // Logic to discard changes
+  const handleEditAddress = (address) => {
+    setEditingAddress(address);
+    // dispatch(fetchAddresses());
   };
 
   return (
-    <div className="flex flex-col w-full items-start">
-      <div className="text-xl font-['Nunito'] font-semibold leading-[28px] text-[#2b2b43] mb-5 mt-4">
-        Address
-      </div>
-      <div className="border-solid border-[#edeef2] bg-white flex flex-col justify-center gap-6 w-full font-['Nunito'] items-start pt-6 pb-5 px-4 border rounded-lg">
-        <div className="text-lg font-bold tracking-[0.1] leading-[24px] text-[#2b2b43]">
-          Shipping Addresses
-        </div>
-
-        <div className="flex flex-col gap-4 w-full items-start">
-          <TextField 
-            icon={FaMapMarkerAlt}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Address"
-          />
-          <div className="flex flex-row gap-4 w-full items-center">
-            <TextField 
-              icon={FaCity}
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
-            />
-            <TextField 
-              icon={FaFlag}
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              placeholder="State"
-            />
+    <div className="container mx-auto my-8 p-4">
+      <h2 className="text-2xl font-bold mb-6">Your Shipping Addresses</h2>
+      {addresses&&addresses.map(address => (
+        <div key={address._id} className="bg-white shadow-md rounded-lg p-4 mb-4">
+          <p>Street: {address.street}</p>
+          <p>City: {address.city}</p>
+          <p>State: {address.state}</p>
+          <p>Zip Code: {address.zipCode}</p>
+          <p>Country: {address.country}</p>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button text="Edit" onClick={() => handleEditAddress(address)} />
+            <Button text="Delete" color="red-600" hoverColor="red-700" onClick={() => handleRemoveAddress(address._id)} />
           </div>
-          <TextField 
-            icon={FaMapPin}
-            value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
-            placeholder="Zip Code"
-          />
         </div>
+      ))}
 
-        <div className="flex justify-end w-full mt-4 gap-4">
-          <Button
-            text="Discard Changes"
-            color="gray-400"
-            hoverColor="gray-500"
-            textColor="text-gray-600"
-            hoverTextColor="text-white"
-            onClick={handleDiscardClick}
-            border={true}
-          />
-          <Button
-            text="Save Changes"
-            color="blue-600"
-            hoverColor="blue-700"
-            textColor="text-white"
-            hoverTextColor="text-white"
-            onClick={handleSaveClick}
-            border={false}
-          />
-        </div>
-      </div>
+      {editingAddress ? 
+        <AddressForm
+          initialValues={editingAddress}
+          onSubmit={(values) => {
+            dispatch(updateAddress(values));
+            setEditingAddress(null);
+          }}
+          onCancel={() => setEditingAddress(null)}
+        />
+        :
+        <AddressForm onSubmit={(values) => dispatch(addAddress(values))} />
+      }
+
+      
     </div>
   );
 };

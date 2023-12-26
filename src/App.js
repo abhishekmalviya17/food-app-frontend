@@ -9,7 +9,9 @@ import Signup from './components/Signup';
 import PrivateRoute from './components/PrivateRoute';
 import { setAuthToken } from './utils/setAuthToken';
 import { SnackbarProvider } from './context/SnackbarContext';
-
+import MenuItemsPage from './components/MenuItemsPage';
+import CartPage from './components/CartPage';
+import OrdersPage from './components/OrdersPage';
 
 const storedUser = JSON.parse(localStorage.getItem('user'));
 if (storedUser && storedUser.token) {
@@ -37,6 +39,9 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/restaurants' element={<PrivateRoute element={Home} />} />
           <Route path='/deals' element={<PrivateRoute element={Home} />} />
+          <Route path="/restaurants/:restaurantId" element={<PrivateRoute element={MenuItemsPage} />} />
+          <Route path='/cart' element={<PrivateRoute element={CartPage} />} />
+          <Route path='/orders' element={<PrivateRoute element={OrdersPage} />} />
         </Routes>
       </Router>
     </SnackbarProvider>

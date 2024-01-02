@@ -11,6 +11,7 @@ import InputField from './common/InputField';
 import LoginSchema from '../validation/LoginValidation';
 import {loginUser} from '../redux/actions/authActions'
 import { useSnackbar } from '../context/SnackbarContext';
+import ReviewsCarousel from './layout/Carousel';
 
 const Login = () => {
     const dispatch = useDispatch(); 
@@ -107,7 +108,7 @@ const Login = () => {
                 </div>
             </div>
             <div className='flex flex-col w-3/5 custom-sm:hidden bg-[#697BFF]'>
-                {/* Additional content for the second column can be added here */}
+                <ReviewsCarousel />
             </div>
         </div>
     );

@@ -30,7 +30,7 @@ export const loginUser = (credentials, navigate, showSnackbar) => dispatch => {
         });
 };
 
-export const logoutUser = (navigate) => {
+export const logoutUser = (navigate) => dispatch => {
     // Clear user details from localStorage
     localStorage.removeItem('user');
     setAuthToken(false);

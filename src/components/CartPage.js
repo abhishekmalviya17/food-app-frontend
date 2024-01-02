@@ -6,86 +6,82 @@ import { createOrder } from '../redux/actions/orderActions';
 import Header from './layout/Header';
 import { TrashIcon } from '@heroicons/react/outline';
 import { useNavigate } from 'react-router-dom';
+import Loader from './common/Loader';
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items, error, user } = useSelector((state) => ({...state.cart, user: state.user}));
   
-  const addresses = useSelector(state => state.address.addresses);
+  const cart = useSelector((state) => state.cart);
+  const addresses = useSelector((state) => state.address.addresses);
   const hasAddress = addresses && addresses.length > 0;
 
+
+  const items = cart.items; 
+
+  // Handle remove item from cart
   const handleRemoveFromCart = (menuItemId) => {
     dispatch(removeFromCart(menuItemId));
-    dispatch(fetchCart());
+    
   };
 
+  // Fetch cart and addresses only on component mount
   useEffect(() => {
     dispatch(fetchCart());
     dispatch(fetchAddresses());
-  }, [dispatch, items]);
+  }, [dispatch]);
 
-  
-
+  // Handle order now action
   const handleOrderNow = () => {
     if (hasAddress) {
-      dispatch(createOrder(items)); // Assuming createOrder action handles order creation
-      navigate('/orders'); // Navigate to orders page
+      dispatch(createOrder(items));
+      navigate('/orders');
     } else {
-      navigate('/settings'); // Navigate to settings page for address addition
+      navigate('/settings');
     }
   };
 
-  const total = useMemo(() => items.reduce((acc, item) => item.menuItem ? acc + (item.menuItem.price * item.quantity) : acc, 0), [items]);
-
-
+  // Calculate total
+  const total = useMemo(() => {
+    return items.reduce((acc, item) => {
+      return item.menuItem ? acc + (item.menuItem.price * item.quantity) : acc;
+    }, 0);
+  }, [items]);
 
   return (
     <>
       <Header />
-      <div className="container mx-auto my-8 px-4">
+      {/* Loader */}
+      {cart.loading&&<Loader  />}
+     
+      {/* Cart Contents */}
+      {!cart.loading&&<div className="container mx-auto my-8 px-4">
         <h2 className="text-4xl font-bold text-blue-700 mb-6">Your Shopping Cart</h2>
         
         {items.length === 0 ? (
           <p className="text-lg text-gray-500">Your cart is empty. Time to fill it up!</p>
         ) : (
           <div className="divide-y divide-gray-300">
-            {items.length === 0 ? (
-  <p className="text-lg text-gray-500">Your cart is empty. Time to fill it up!</p>
-) : (
-  <div className="divide-y divide-gray-300">
-    {items
-      .filter(item => item.menuItem) // Only render items with a defined menuItem
-      .map((item) => (
-        <>
-        {
-          item.menuItem.price
-          ?
-          <div key={item.menuItem._id} className="py-4 flex justify-between items-center">
-          <div className="flex-1">
-            <h3 className="text-2xl font-semibold text-gray-800">{item.menuItem.name}</h3>
-            <p className="text-gray-600 mt-2 text-md">{item.menuItem.description}</p>
-          </div>
-          <div className="flex items-center text-lg font-medium">
-            <span className="text-blue-600 mr-4">${item.menuItem.price.toFixed(2)} x {item.quantity}</span>
-            <button
-              onClick={() => handleRemoveFromCart(item.menuItem._id)}
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded inline-flex items-center ml-4"
-            >
-              <TrashIcon className="h-4 w-4 mr-1"/>
-              Remove
-            </button>
-          </div>
-        </div>
-        :
-        null
-        }
-        
-        </>
-      ))
-    }
-  </div>
-)}
+            {items.map((item) => (
+              item.menuItem && (
+                <div key={item.menuItem._id} className="py-4 flex justify-between items-center">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold text-gray-800">{item.menuItem.name}</h3>
+                    <p className="text-gray-600 mt-2 text-md">{item.menuItem.description}</p>
+                  </div>
+                  <div className="flex items-center text-lg font-medium">
+                    <span className="text-blue-600 mr-4">${item.menuItem.price?item.menuItem.price.toFixed(2):0} x {item.quantity}</span>
+                    <button
+                      onClick={() => handleRemoveFromCart(item.menuItem._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded inline-flex items-center ml-4"
+                    >
+                      <TrashIcon className="h-4 w-4 mr-1"/>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              )
+            ))}
             <div className="pt-4 text-right">
               <h3 className="text-2xl font-bold text-gray-900">Total: ${total.toFixed(2)}</h3>
               <button
@@ -97,7 +93,7 @@ const CartPage = () => {
             </div>
           </div>
         )}
-      </div>
+      </div>}
     </>
   );
 };

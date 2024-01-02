@@ -33,7 +33,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div ref={searchBarRef} className="relative w-3/4 cursor-pointer"> 
+    <div ref={searchBarRef} className="relative w-3/4 cursor-pointer custom-sm:hidden"> 
       <div id="Box4" className="bg-[#edeef2] flex flex-row justify-between w-full h-10 font-['Nunito'] items-start pt-2 px-3 rounded-lg">
         <input
           type="text"

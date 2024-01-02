@@ -1,8 +1,9 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, FETCH_CART, CART_ERROR } from '../actionTypes';
+import { ADD_TO_CART, REMOVE_FROM_CART, FETCH_CART, CART_ERROR, CART_LOADING_END, CART_LOADING_START} from '../actionTypes';
 
 const initialState = {
     items: [],
-    error: null
+    error: null,
+    loading: false
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -30,6 +31,16 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload
             };
+        case CART_LOADING_START:
+                return {
+                  ...state,
+                  loading: true,
+                };
+        case CART_LOADING_END:
+                return {
+                  ...state,
+                  loading: false,
+                };
         default:
             return state;
     }

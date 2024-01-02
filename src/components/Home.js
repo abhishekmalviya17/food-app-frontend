@@ -9,6 +9,7 @@ import BannerImg1 from '../images/Banner.png';
 import BannerImg2 from '../images/Banner1.png';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 const Home = () => {
     const dispatch = useDispatch();
     const { restaurants, loading: loadingRestaurants, error: errorRestaurants } = useSelector(state => state.restaurants);

@@ -1,10 +1,21 @@
 import React from 'react';
-import { ShoppingCartIcon } from '@heroicons/react/outline';
+import { ShoppingBagIcon } from '@heroicons/react/outline';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
-const Restaurant = ({ restaurant, categories }) => {
+const Restaurant = ({ restaurant, categories}) => {
     const navigate = useNavigate();
-    
+
+    const filteredCategories = categories.filter(category => 
+        restaurant.categories.includes(category.name)
+      );
+
+      const { items } = useSelector((state) => state.cart);
+
+
+
+      const numberOfItemsInCart = items.filter(item => item.menuItem.restaurant === restaurant._id).reduce((total, item) => total + item.quantity, 0);
+
     return(
         <div className="flex flex-row w-full items-start" onClick={() => navigate(`/restaurants/${restaurant._id}`)}>
             <div
@@ -12,8 +23,15 @@ const Restaurant = ({ restaurant, categories }) => {
                 className="border-solid border-[#edeef2] bg-white flex flex-col pb-4 gap-4 w-full items-start border rounded-lg"
             >
                 <div
-                id="ImgMask"
-                className="bg-[url(https://file.rendit.io/n/aep7vbCuA1rlf6IRUhDF.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-end ml-0 w-full h-40 items-start"
+                    id="ImgMask"
+                    style={{
+                        backgroundImage: `url(${restaurant.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundBlendMode: 'normal',
+                        backgroundRepeat: 'no-repeat',
+                    }}
+                    className="flex flex-row justify-end ml-0 w-full h-40 items-start"
                 >
                      {restaurant.isFeatured && 
                 <div className="text-xs font-['Nunito'] font-bold tracking-[0.6] leading-[16px] uppercase text-white bg-[#4e60ff] flex flex-row justify-center pt-2 w-24 h-8 items-start rounded-tr-lg rounded-bl-lg">
@@ -29,11 +47,15 @@ const Restaurant = ({ restaurant, categories }) => {
                         >
                             {restaurant.name}
                         </div>
-                        <img
-                            src="https://file.rendit.io/n/08fzoodKtBtny6lJEcMe.svg"
-                            alt="IconOutlinedOtherShopShoppingBag"
-                            className="w-5 mr-12"
-                        />
+                        <div className="relative">
+                        <ShoppingBagIcon className="h-9 w-9 mt-1 mr-2 custom-sm:mt-0 custom-sm:wr-0 custom-sm:w-9 custom-sm:h-10 text-blue-500" />
+                            {numberOfItemsInCart > 0 && (
+                                <span className="absolute right-0 top-0 inline-flex items-center justify-center px-2 py-1 custom-sm:py-0 text-xs font-bold leading-none text-white bg-blue-600 rounded-full">
+                                    {numberOfItemsInCart}
+                                </span>
+                            )}
+                        
+                        </div>
                     </div>
                     <div className="flex flex-row justify-between w-1/2 items-start">
                     <div className="flex flex-row gap-1 w-20 items-start">
@@ -62,24 +84,35 @@ const Restaurant = ({ restaurant, categories }) => {
                         $32 min sum
                     </div>
                     </div>
-                </div>
-                <div
-                    id="BadgeIconLeftDefault"
-                    className="bg-[#edeef2] flex flex-row justify-center pt-1 gap-2 w-16 h-6 items-start rounded-[100px]"
-                >
-                    <img
-                    src={"https://file.rendit.io/n/CKG2IE17kFdC3Fe5LUZ8.png"}
-                    alt="EmojiSushi"
-                    id="EmojiSushi"
-                    className="mt-px w-3"
-                    />
-                    <div
-                    id="Label"
-                    className="text-xs font-semibold leading-[16px] text-[#545563]"
-                    >
-                    Sushi
                     </div>
+                
+                <div className='flex flex-row w-100'>
+                {
+                    filteredCategories.map((category) => {
+                        return(
+                            <div
+                    id="BadgeIconLeftDefault"
+                    className="bg-[#edeef2] flex flex-row justify-center pt-1 gap-2 pr-3 pl-3 mr-6 h-6 items-start rounded-[40px]"
+                            >
+                                <img
+                                src={category.imageUrl}
+                                alt="EmojiSushi"
+                                id="EmojiSushi"
+                                className="mt-px w-3"
+                                />
+                                <div
+                                id="Label"
+                                className="text-xs font-semibold leading-[16px] text-[#545563]"
+                                >
+                                {category.name}
+                                </div>
+                            </div>
+                        )
+                    })
+                }
                 </div>
+               
+               
                 </div>
             </div>
         </div>

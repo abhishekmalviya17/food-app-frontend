@@ -67,7 +67,7 @@ const Header = () => {
               <label  onClick={() => navigate('/home')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold d px-4 my-2 border-r-2 border-[#EDEEF2] hover:text-custom-blue custom-sm:hidden">
                 Deals
               </label>
-              <label  onClick={() => navigate('/settings')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold  mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
+              <label  onClick={() => navigate('/cart')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold  mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
                 My orders
               </label>
 
@@ -88,7 +88,7 @@ const Header = () => {
                     className="z-10 bg-white custom-sm:mr-40"
                   >
                     <div className="flex flex-col">
-                      <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/home')}>
+                      <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/settings')}>
                         Profile
                       </a>
                       <a href="#" className="p-2 hover:bg-gray-100" onClick={() => navigate('/logout')}>

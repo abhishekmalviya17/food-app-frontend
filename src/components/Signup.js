@@ -9,10 +9,12 @@ import Snackbar from './common/Snackbar';
 import config from '../config'; // Ensure this is the correct path
 import InputField from './common/InputField';
 import SignupSchema from '../validation/SignupValidation';
+import { useSnackbar } from '../context/SnackbarContext';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [snackbar, setSnackbar] = useState({ message: '', type: '' });
+  
+  const { showSnackbar } = useSnackbar();
 
   const formik = useFormik({
     initialValues: {
@@ -26,11 +28,11 @@ const Signup = () => {
     onSubmit: async (values) => {
       try {
         await axios.post(`${config.apiUrl}/api/users/`, values);
-        setSnackbar('Signup successful! Redirecting to login...',  'success' );
+        showSnackbar('Signup successful! Redirecting to login...',  'success' );
         setTimeout(() => navigate('/login'), 3000); // Redirect after 3 seconds
       } catch (error) {
         const errorMsg = error.response ? error.response.data.message : error.message;
-        setSnackbar({ message: errorMsg, type: 'error' });
+        showSnackbar(errorMsg, 'error' );
       }
     },
   });
@@ -119,7 +121,7 @@ const Signup = () => {
     <div className='flex flex-col w-3/5 custom-sm:hidden bg-[#697BFF]'>
               
     </div>
-    <Snackbar message={snackbar.message} type={snackbar.type} />
+    
   </div>
   );
 };

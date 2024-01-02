@@ -8,6 +8,7 @@ import { fetchRestaurants, fetchRestaurantsByCategory } from '../redux/actions/r
 import BannerImg1 from '../images/Banner.png';
 import BannerImg2 from '../images/Banner1.png';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from './common/Loader';
 
 
 const Home = () => {
@@ -30,6 +31,8 @@ const Home = () => {
         }
     };
 
+    
+
     // if (loadingRestaurants || loadingCategories) return <p>Loading...</p>;
     // if (errorRestaurants || errorCategories) return <p>Error occurred</p>;
 
@@ -43,7 +46,7 @@ const Home = () => {
                 </div>
 
                 <div className="flex flex-wrap justify-between p-4">
-                    {categories.map((category) => (
+                    {loadingCategories ? <Loader /> : categories.map((category) => (
                         <Category
                             key={category.name}
                             category={category.name}
@@ -57,7 +60,7 @@ const Home = () => {
                 <div className="py-8 px-4 md:px-6">
                     <h3 className="text-xl font-bold mb-4">Nearby restaurants</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {restaurants.map((restaurant) => (
+                        {loadingRestaurants ? <Loader /> : restaurants.map((restaurant) => (
                             <Restaurant key={restaurant.id} restaurant={restaurant} categories={categories}/>
                         ))}
                     </div>

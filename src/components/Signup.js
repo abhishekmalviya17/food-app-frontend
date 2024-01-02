@@ -26,7 +26,7 @@ const Signup = () => {
     onSubmit: async (values) => {
       try {
         await axios.post(`${config.apiUrl}/api/users/`, values);
-        setSnackbar({ message: 'Signup successful! Redirecting to login...', type: 'success' });
+        setSnackbar('Signup successful! Redirecting to login...',  'success' );
         setTimeout(() => navigate('/login'), 3000); // Redirect after 3 seconds
       } catch (error) {
         const errorMsg = error.response ? error.response.data.message : error.message;

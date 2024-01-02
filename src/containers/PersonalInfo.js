@@ -289,7 +289,7 @@ const PersonalInfo = () => {
                       onClick={() => formik.handleSubmit()}
                       hoverColor="green-700" 
                       textColor="green-700" 
-                      hoverTextColor="white" 
+                      hoverTextColor="white"  
                       border={true} 
                       extraClasses="text-lg bg-white w-100" 
                   />

@@ -72,31 +72,34 @@ const Header = () => {
               </label>
 
                 {/* Avatar */}
-              <div class="cursor-pointer custom-sm:w-14 custom-sm:h-14 w-11 h-11 rounded-xl border-4 border-[#EDEEF2] flex justify-center items-center overflow-hidden mx-2">
-                <img src={avatarImage} alt="User avatar" class="object-cover w-full h-full" onClick={() => {toggleAvatarMenu()}}/>
-              </div>
-              {/* Avatar Menu*/}
-              {isAvatarMenuOpen && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      width: '10vw',
-                      top: '80px', 
-                  
-                      right: '3vw'
-                    }}
-                    className="z-10 bg-white custom-sm:mr-40"
-                  >
-                    <div className="flex flex-col">
-                      <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/settings')}>
-                        Profile
-                      </a>
-                      <a href="#" className="p-2 hover:bg-gray-100" onClick={() => navigate('/logout')}>
-                        Logout
-                      </a>
+                <div className="relative">
+                    <div class="cursor-pointer custom-sm:w-14 custom-sm:h-14 w-11 h-11 rounded-xl border-4 border-[#EDEEF2] flex justify-center items-center overflow-hidden mx-2">
+                    <img src={avatarImage} alt="User avatar" class="object-cover w-full h-full" onClick={() => {toggleAvatarMenu()}}/>
                     </div>
-                  </div>
-                )}
+
+                    {isAvatarMenuOpen && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          width: '20vw',
+                          top: '60px', 
+                        }}
+                        className="z-10 bg-white custom-sm:mr-40"
+                      >
+                        <div className="flex flex-col">
+                          <a href="#" className="p-2 hover:bg-gray-100"  onClick={() => navigate('/settings')}>
+                            Profile
+                          </a>
+                          <a href="#" className="p-2 hover:bg-gray-100" onClick={() => navigate('/logout')}>
+                            Logout
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                </div>  
+              
+              {/* Avatar Menu*/}
+             
 
                 {/* Cart icon */}
                 <div className="cursor-pointer relative inline-block mx-2 my-1 custom-sm:my-2" onClick={() => navigate('/cart')}>

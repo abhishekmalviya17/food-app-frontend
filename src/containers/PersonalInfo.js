@@ -264,7 +264,7 @@ const PersonalInfo = () => {
              <Button 
                       text="Logout" 
                       color="red-600" 
-                      onClick={handleButtonClick} 
+                      onClick={() => navigate('/logout')} 
                       hoverColor="red-700" 
                       textColor="red-700" 
                       hoverTextColor="white" 
@@ -302,9 +302,4 @@ const PersonalInfo = () => {
 
 export default PersonalInfo;
 
-{/* <div className="flex flex-row ml-16 gap-4 w-5/6 items-start">
 
-</div>
-
-
-*/}

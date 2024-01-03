@@ -36,11 +36,11 @@ const Header = () => {
 
   return (
     //Main Header container
-    <div className="mx-auto flex flex-col w-full custom-sm:w-full custom-sm:p-0 custom-sm:m-0 items-start">
+    <div className="mx-auto flex flex-col w-full items-start">
       {/* Container Providing height and width to the header*/}
       <div
         id="Box"
-        className="cursor-pointer bg-white flex flex-col justify-end gap-3 w-full h-20 custom-sm:h-30 items-start font-['Nunito'] custom-sm:mr-2 custom-sm:ml-2"
+        className="cursor-pointer bg-white flex flex-col justify-end gap-3 w-full h-20 custom-sm:h-30 items-start font-['Nunito'] custom-sm:pr-5 custom-sm:pl-2"
       >
         {/* Our main header container containing all the header items */}
         <div className="custom-md:pl-40 custom-md:pr-40 flex flex-row justify-between custom-sm:items-end custom-sm:ml-2 custom-sm:w-full w-full items-start">
@@ -58,9 +58,9 @@ const Header = () => {
           </div>
 
           {/* Right Part of the header */}
-          <div className="flex flex-row gap-6 w-3/5 justify-end custom-sm:justify-start custom-sm:w-3/4 custom-sm:w-60 custom-sm:mx-2 font-['Nunito'] items-start">
+          <div className="flex flex-row gap-6 w-3/5 justify-end custom-sm:justify-start custom-sm:w-3/4 custom-sm:w-60 font-['Nunito'] items-start ">
 
-            <div className="flex flex-row justify-between custom-sm:w-full items-start text-custom-black tracking-custom-1 font-normal">
+            <div className="flex flex-row justify-between custom-sm:w-full items-start text-custom-black tracking-custom-1 font-normal ">
               <label  onClick={() => navigate('/home')} className="cursor-pointer  font-['Nunito'] gap-3 font-semibold mx-4 my-2 hover:text-custom-blue custom-sm:hidden">
                 Restaurants
               </label>
